@@ -52,7 +52,7 @@ def popup_privacy_onetime(page: any):
   """Clicks the reject button inside the privacy popup on first time page loading
   
       Parameters:
-      browser (any): Browser window (e.g. firefox)
+      browser (any): Browser window (e.g. chromium, firefox)
   """
   
   try:
