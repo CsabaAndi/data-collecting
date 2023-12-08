@@ -1,5 +1,4 @@
-from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
-import asyncio
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 from bs4 import BeautifulSoup
 import pandas as pd
 import logging
@@ -38,7 +37,7 @@ logging.basicConfig(format=FORMAT, level=logging.INFO)
 logging.info( 'Logging now setup.' )
 '''
 
-async def time_wait(wait_time_seconds: float, bool_async: bool):
+def time_wait(wait_time_seconds: float, bool_async: bool):
   """Waits x seconds, normal or async
   
       Parameters:
@@ -47,12 +46,12 @@ async def time_wait(wait_time_seconds: float, bool_async: bool):
 
   """
   if bool_async is True:
-    await asyncio.sleep(wait_time_seconds, result='done')
+    time.sleep(wait_time_seconds)
   time.sleep(wait_time_seconds)
   logging.debug(f"waited: {wait_time_seconds} seconds, async: {bool_async}")
 
 
-async def popup_privacy_onetime(page: any):
+def popup_privacy_onetime(page: any):
   """Clicks the reject button inside the privacy popup on first time page loading
   
       Parameters:
@@ -60,7 +59,7 @@ async def popup_privacy_onetime(page: any):
   """
   
   try:
-    await page.get_by_text("Reject All").click(timeout=100)
+    page.get_by_text("Reject All").click(timeout=100)
     logging.debug(f"privacy popup reject button clicked")
   except PlaywrightTimeoutError:
     logging.debug(f"privacy popup not visible or already saved in cookies, timeouterror")
@@ -68,7 +67,7 @@ async def popup_privacy_onetime(page: any):
 
 
 
-async def table_scrape(html): # csinálni + dokument
+def table_scrape(html): # csinálni + dokument
 
     soup = BeautifulSoup(html, 'html.parser')
     
@@ -91,10 +90,10 @@ async def table_scrape(html): # csinálni + dokument
 
 
 
-async def to_dataframe(html):
+def to_dataframe(html):
   
   
-  headers, rows = await table_scrape(html)
+  headers, rows = table_scrape(html)
   # headers = []
   df_table_wide = pd.DataFrame(rows, columns=headers)
   df_table_wide.to_csv(r'./exported_data/test.csv', sep='\t', encoding='utf-8', index=False)
@@ -107,9 +106,9 @@ async def to_dataframe(html):
   
   return 0
 
-async def main(debug_slow_down=0):
- async with async_playwright() as p:
-    browser = await p.chromium.launch_persistent_context(
+def main(debug_slow_down=0):
+ with sync_playwright() as p:
+    browser = p.chromium.launch_persistent_context(
         user_data_dir=constans.BROWSER_DATA_DIR,
         headless=False,
         slow_mo=debug_slow_down,
@@ -118,29 +117,29 @@ async def main(debug_slow_down=0):
             f"--load-extension={constans.PATH_TO_EXTENSIONS+"/ublock_origin"}{","}{constans.PATH_TO_EXTENSIONS+"/adblock"}",
         ],
     )
-    page = await browser.new_page()
+    page = browser.new_page()
 
-    await page.route("**/*", rb.intercept_route)
-    await page.goto(constans.LINKS_2023_2024[0]) # todo
-    #await page.wait_for_timeout(1000)
+    page.route("**/*", rb.intercept_route)
+    page.goto(constans.LINKS_2023_2024[0]) # todo
+    #page.wait_for_timeout(1000)
    
     
-    await time_wait(0.5, False)
-    await popup_privacy_onetime(page)
+    time_wait(0.5, False) #!!!!!!!!!!!!!!!!!!!!!
+    popup_privacy_onetime(page)
     
 
-    await page.get_by_role("listitem").filter(has_text="Wide").click()
-    await time_wait(0.5, False)
+    page.get_by_role("listitem").filter(has_text="Wide").click()
+    time_wait(0.5, False) #!!!!!!!!!!!!!!!!!!!!!
         
-    html = await page.content()
+    html = page.content()
     
-    await to_dataframe(html)
+    to_dataframe(html)
     
       
     # tábla kattintás vissza gomb x20
     '''  
     for _ in range(20):
-      await page.get_by_text("Previous").click()'''
+      page.get_by_text("Previous").click()'''
     
 
     # ide jön : csapat választás
@@ -150,11 +149,12 @@ async def main(debug_slow_down=0):
     # automatizálás
     
     logging.debug(f"DONE")
-    #await asyncio.sleep(100000000)
-    await asyncio.sleep(5) # excelbe irásra várás
-    await browser.close()
+
+
+    time.sleep(0) # excelbe irásra várás
+    browser.close()
    
    
 if __name__ == "__main__":
   with debuglog.timed():
-    asyncio.run(main(debug_slow_down=10))
+    main(debug_slow_down=10)
