@@ -70,9 +70,9 @@ def table_scrape(html): # csinálni + dokument
     
     table = soup.select_one("table.detailed-table")
     table_rows = table.tbody.find_all('tr')
-    headers = table.thead.find_all('th')
+    #headers = table.thead.find_all('th')
 
-    # levágja a nevet vagy mi 
+    # FIXME levágja a szöveg végét 
     res = []
     for tr in table_rows:
         td = tr.find_all('td')
@@ -117,23 +117,23 @@ def main(debug_slow_down=0):
     page = browser.new_page()
 
     page.route("**/*", rb.intercept_route)
-    page.goto(constans.LINKS_2023_2024[0]) # todo
+    page.goto(constans.LINKS_2023_2024[0]) # TODO automatize scraping for all links
     #page.wait_for_timeout(1000)
    
     
-    time_wait(0.5, False) #!!!!!!!!!!!!!!!!!!!!!
+    time_wait(0.5)
     popup_privacy_onetime(page)
     
 
     page.get_by_role("listitem").filter(has_text="Wide").click()
-    time_wait(0.5, False) #!!!!!!!!!!!!!!!!!!!!!
+    time_wait(0.5)
         
     html = page.content()
     
     to_dataframe(html)
     
       
-    # tábla kattintás vissza gomb x20
+    # TODO tábla kattintás vissza gomb x20
     '''  
     for _ in range(20):
       page.get_by_text("Previous").click()'''
@@ -148,10 +148,10 @@ def main(debug_slow_down=0):
     logging.debug(f"DONE")
 
 
-    time.sleep(0) # excelbe irásra várás
+    #time.sleep(0)
     browser.close()
    
    
 if __name__ == "__main__":
   with debuglog.timed():
-    main(debug_slow_down=10)
+    main(debug_slow_down=0)
