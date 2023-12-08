@@ -37,18 +37,15 @@ logging.basicConfig(format=FORMAT, level=logging.INFO)
 logging.info( 'Logging now setup.' )
 '''
 
-def time_wait(wait_time_seconds: float, bool_async: bool):
-  """Waits x seconds, normal or async
+def time_wait(wait_time_seconds: float):
+  """Calls time.sleep(wait_time_seconds), then prints the debug log if logging is set to debug
   
       Parameters:
       wait_time_seconds (float): time to wait in seconds
-      bool_async (bool): True --> async.sleep , False --> time.sleep
 
   """
-  if bool_async is True:
-    time.sleep(wait_time_seconds)
   time.sleep(wait_time_seconds)
-  logging.debug(f"waited: {wait_time_seconds} seconds, async: {bool_async}")
+  logging.debug(f"waited: {wait_time_seconds} seconds")
 
 
 def popup_privacy_onetime(page: any):
