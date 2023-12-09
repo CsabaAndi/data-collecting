@@ -1,39 +1,13 @@
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 import logging
-# import argparse
 import time
 from debug_pkg.logs import log as debuglog
 from resource_blocking_pkg import block as rb
 import constans_pkg.constans as constans
 import dataframes
 
-# TODO mindent kiszervezni majd module/pkg  / not important /
-''' TODO / not important /
-parser = argparse.ArgumentParser()
-parser.add_argument( '-log',
-                     '--loglevel',
-                     default='warning',
-                     help='Provide logging level. Example --loglevel debug, default=warning. Use debug for more info')
 
-args = parser.parse_args()
-levels = {
-    'critical': logging.CRITICAL,
-    'error': logging.ERROR,
-    'warn': logging.WARNING,
-    'warning': logging.WARNING,
-    'info': logging.INFO,
-    'debug': logging.DEBUG
-}
-# args.loglevel.upper  --> -log "debug"
-# levels[args.loglevel.upper()]
-'''
-'''
-# majd külön pkg
-logger = logging.getLogger(__name__)
-FORMAT = "[%(asctime)s %(filename)s->%(funcName)s():%(lineno)s] %(levelname)s: %(message)s" 
-logging.basicConfig(format=FORMAT, level=logging.INFO)
-logging.info( 'Logging now setup.' )
-'''
+# TODO mindent kiszervezni majd module/pkg  / not important /
 
 def time_wait(wait_time_seconds: float, msg="no msg"):
   """Calls time.sleep(wait_time_seconds), then prints the debug log if logging is set to debug
