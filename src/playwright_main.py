@@ -60,7 +60,7 @@ def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
     popup_privacy_onetime(page)
        
        
-    page.get_by_role("listitem").filter(has_text="Wide").click()
+    #page.get_by_role("listitem").filter(has_text="Wide").click()
     time_wait(0.5)
         
     html = page.content()

@@ -1,10 +1,12 @@
 import data_to_scrape
 import pandas as pd
 
+
+# TODO többi leszedett táblázatot is átalakitani majd csv or json !!!
+
 def to_dataframe(html):
   
-  
-  headers, rows = data_to_scrape.wide_table_scrape(html)
+  headers, rows = data_to_scrape.table_scrape_wide(html)
   # headers = []
   df_table_wide = pd.DataFrame(rows, columns=headers)
   df_table_wide.to_csv(r'../exported_data/test.csv', sep='\t', encoding='utf-8', index=False)
