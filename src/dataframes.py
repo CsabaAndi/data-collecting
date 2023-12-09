@@ -4,7 +4,7 @@ import pandas as pd
 def to_dataframe(html):
   
   
-  headers, rows = data_to_scrape.table_scrape(html)
+  headers, rows = data_to_scrape.wide_table_scrape(html)
   # headers = []
   df_table_wide = pd.DataFrame(rows, columns=headers)
   df_table_wide.to_csv(r'../exported_data/test.csv', sep='\t', encoding='utf-8', index=False)
