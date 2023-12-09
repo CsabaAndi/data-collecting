@@ -6,6 +6,8 @@ from resource_blocking_pkg import block as rb
 import constans_pkg.constans as constans
 import dataframes
 
+import data_to_scrape_team
+
 
 # TODO mindent kiszervezni majd module/pkg  / not important /
 
@@ -52,7 +54,8 @@ def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
     page = browser.new_page()
 
     page.route("**/*", rb.intercept_route)
-    page.goto(constans.LINKS_2023_2024[0]) # TODO automatize scraping for all links
+    #constans.LINKS_2023_2024[0]
+    page.goto("https://us.soccerway.com/teams/england/arsenal-fc/660/statistics/") # TODO automatize scraping for all links
     #page.wait_for_timeout(1000)
    
 
@@ -61,12 +64,13 @@ def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
        
     # TODO 1st last five table | 2nd wide click és wide table | 3rd topscorers table !!!!!!!!
     #page.get_by_role("listitem").filter(has_text="Wide").click()
-    page.get_by_role("listitem").filter(has_text="Over/under").click()
+    #page.get_by_role("listitem").filter(has_text="Over/under").click()
     time_wait(0.5)
         
     html = page.content()
     
-    dataframes.to_dataframe(html)
+    #dataframes.to_dataframe(html)
+    data_to_scrape_team.table_scrape_statistic(html)
     
       
     # TODO tábla kattintás vissza gomb for team specific game scores

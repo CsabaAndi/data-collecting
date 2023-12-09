@@ -1,4 +1,4 @@
-import data_to_scrape
+import data_to_scrape_tablepage
 import pandas as pd
 
 
@@ -6,7 +6,7 @@ import pandas as pd
 
 def to_dataframe(html):
   
-  headers, rows = data_to_scrape.table_scrape_wide(html)
+  headers, rows = data_to_scrape_tablepage.table_scrape_wide(html)
   # headers = []
   df_table_wide = pd.DataFrame(rows, columns=headers)
   df_table_wide.to_csv(r'../exported_data/test.csv', sep='\t', encoding='utf-8', index=False)
@@ -18,3 +18,7 @@ def to_dataframe(html):
   print(df.to_markdown())
   
   return 0
+
+
+if __name__ == "__main__":
+  pass
