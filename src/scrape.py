@@ -37,15 +37,16 @@ logging.basicConfig(format=FORMAT, level=logging.INFO)
 logging.info( 'Logging now setup.' )
 '''
 
-def time_wait(wait_time_seconds: float):
+def time_wait(wait_time_seconds: float, msg="no msg"):
   """Calls time.sleep(wait_time_seconds), then prints the debug log if logging is set to debug
   
       Parameters:
       wait_time_seconds (float): time to wait in seconds
+      msg (str): message for the logger
 
   """
   time.sleep(wait_time_seconds)
-  logging.debug(f"waited: {wait_time_seconds} seconds")
+  logging.debug(f"waited: {wait_time_seconds} seconds [{msg}]")
 
 
 def popup_privacy_onetime(page: any):
@@ -56,7 +57,7 @@ def popup_privacy_onetime(page: any):
   """
   
   try:
-    page.get_by_text("Reject All").click(timeout=100)
+    page.get_by_role("button").filter(has_text="Reject All").click(timeout=100)
     logging.debug(f"privacy popup reject button clicked")
   except PlaywrightTimeoutError:
     logging.debug(f"privacy popup not visible or already saved in cookies, timeouterror")
@@ -103,15 +104,17 @@ def to_dataframe(html):
   
   return 0
 
-def main(debug_slow_down=0):
+def main(debug_slow_down=0): # TODO külön class browser-nek
  with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
         user_data_dir=constans.BROWSER_DATA_DIR,
         headless=False,
         slow_mo=debug_slow_down,
+        # f"--disable-extensions-except={constans.PATH_TO_EXTENSIONS+"/ublock_origin"}{","}{constans.PATH_TO_EXTENSIONS+"/adblock"}"
+        # f"--load-extension={constans.PATH_TO_EXTENSIONS+"/ublock_origin"}{","}{constans.PATH_TO_EXTENSIONS+"/adblock"}"
         args=[
-            f"--disable-extensions-except={constans.PATH_TO_EXTENSIONS+"/ublock_origin"}{","}{constans.PATH_TO_EXTENSIONS+"/adblock"}",
-            f"--load-extension={constans.PATH_TO_EXTENSIONS+"/ublock_origin"}{","}{constans.PATH_TO_EXTENSIONS+"/adblock"}",
+            f"--disable-extensions-except={constans.PATH_TO_EXTENSIONS+"/ublock_origin"}",
+            f"--load-extension={constans.PATH_TO_EXTENSIONS+"/ublock_origin"}",
         ],
     )
     page = browser.new_page()
@@ -120,11 +123,11 @@ def main(debug_slow_down=0):
     page.goto(constans.LINKS_2023_2024[0]) # TODO automatize scraping for all links
     #page.wait_for_timeout(1000)
    
-    
-    time_wait(0.5)
-    popup_privacy_onetime(page)
-    
 
+    time_wait(0.5, msg="after page open")
+    popup_privacy_onetime(page)
+       
+       
     page.get_by_role("listitem").filter(has_text="Wide").click()
     time_wait(0.5)
         
@@ -148,10 +151,15 @@ def main(debug_slow_down=0):
     logging.debug(f"DONE")
 
 
-    #time.sleep(0)
+    #time_wait(1000000000000000)
     browser.close()
    
    
 if __name__ == "__main__":
   with debuglog.timed():
     main(debug_slow_down=0)
+    
+    
+    
+    
+  
