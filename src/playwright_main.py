@@ -1,16 +1,14 @@
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
-from bs4 import BeautifulSoup
-import pandas as pd
 import logging
 # import argparse
 import time
 from debug_pkg.logs import log as debuglog
 from resource_blocking_pkg import block as rb
 import constans_pkg.constans as constans
+import dataframes
 
-
-# mindent kiszervezni majd module/pkg 
-'''
+# TODO mindent kiszervezni majd module/pkg  / not important /
+''' TODO / not important /
 parser = argparse.ArgumentParser()
 parser.add_argument( '-log',
                      '--loglevel',
@@ -64,47 +62,7 @@ def popup_privacy_onetime(page: any):
 
 
 
-
-def table_scrape(html): # csinálni + dokument
-
-    soup = BeautifulSoup(html, 'html.parser')
-    
-    table = soup.select_one("table.detailed-table")
-    table_rows = table.tbody.find_all('tr')
-    #headers = table.thead.find_all('th')
-
-    # FIXME levágja a szöveg végét 
-    res = []
-    for tr in table_rows:
-        td = tr.find_all('td')
-        row = [tr.text.strip() for tr in td if tr.text.strip()]
-        if row:
-            res.append(row)  
-    logging.debug(res)   
-    
-    
-    headers_table_wide = ["index", "team", "MP-T", "W-T", "D-T", "L-T", "GF-T", "GA-T", "MP-H", "W-H", "D-H", "L-H", "GF-H", "GA-H", "MP-A", "W-A", "D-A", "L-A", "GF-A", "GA-A", "GD", "P"]
-    return headers_table_wide, res
-
-
-
-def to_dataframe(html):
-  
-  
-  headers, rows = table_scrape(html)
-  # headers = []
-  df_table_wide = pd.DataFrame(rows, columns=headers)
-  df_table_wide.to_csv(r'./exported_data/test.csv', sep='\t', encoding='utf-8', index=False)
-  
-  df = df_table_wide.set_index('index')
-  
-  
-  # Converts the dataframe into str object with formatting
-  print(df.to_markdown())
-  
-  return 0
-
-def main(debug_slow_down=0): # TODO külön class browser-nek
+def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
  with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
         user_data_dir=constans.BROWSER_DATA_DIR,
@@ -133,7 +91,7 @@ def main(debug_slow_down=0): # TODO külön class browser-nek
         
     html = page.content()
     
-    to_dataframe(html)
+    dataframes.to_dataframe(html)
     
       
     # TODO tábla kattintás vissza gomb x20
@@ -158,8 +116,3 @@ def main(debug_slow_down=0): # TODO külön class browser-nek
 if __name__ == "__main__":
   with debuglog.timed():
     main(debug_slow_down=0)
-    
-    
-    
-    
-  
