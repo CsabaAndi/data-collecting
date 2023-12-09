@@ -59,8 +59,9 @@ def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
     time_wait(0.5, msg="after page open")
     popup_privacy_onetime(page)
        
-       
+    # TODO 1st last five table | 2nd wide click és wide table | 3rd topscorers table !!!!!!!!
     #page.get_by_role("listitem").filter(has_text="Wide").click()
+    page.get_by_role("listitem").filter(has_text="Over/under").click()
     time_wait(0.5)
         
     html = page.content()
@@ -68,7 +69,7 @@ def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
     dataframes.to_dataframe(html)
     
       
-    # TODO tábla kattintás vissza gomb x20
+    # TODO tábla kattintás vissza gomb for team specific game scores
     '''  
     for _ in range(20):
       page.get_by_text("Previous").click()'''
