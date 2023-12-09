@@ -1,7 +1,9 @@
 #dir for the browser extensions
-PATH_TO_EXTENSIONS = "./browser/extensions/chrome_extensions"
+PATH_TO_EXTENSIONS = "../browser/extensions/chrome_extensions"
+
+
 #userdir for the browser 
-BROWSER_DATA_DIR = "./browser/chromium/tmp/test-user-data-dir"
+BROWSER_DATA_DIR = "../browser/chromium/tmp/test-user-data-dir"
 # links
 LINKS_2023_2024 = ["https://us.soccerway.com/national/england/premier-league/20232024/regular-season/r76443/", 
                    "https://us.soccerway.com/national/germany/bundesliga/20232024/regular-season/r76158/",

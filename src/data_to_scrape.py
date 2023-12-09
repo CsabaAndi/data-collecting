@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import logging
 
 
+
 def table_scrape(html): # csinálni + dokument
 
     soup = BeautifulSoup(html, 'html.parser')
@@ -17,7 +18,7 @@ def table_scrape(html): # csinálni + dokument
         row = [tr.text.strip() for tr in td if tr.text.strip()]
         if row:
             res.append(row)  
-    logging.debug(res)   
+    #logging.debug(res)   
     
     
     headers_table_wide = ["index", "team", "MP-T", "W-T", "D-T", "L-T", "GF-T", "GA-T", "MP-H", "W-H", "D-H", "L-H", "GF-H", "GA-H", "MP-A", "W-A", "D-A", "L-A", "GF-A", "GA-A", "GD", "P"]
