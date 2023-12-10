@@ -3,13 +3,14 @@
 
 ## Összefoglaló
 
-A program lényege : [SOCCERWAY](https://us.soccerway.com) oldalon található adatok kigyüjtése.
+A program lényege : [SOCCERWAY](https://us.soccerway.com) oldalon található adatok kigyüjtése. 
+Akár 1901/1902-es szezonig visszamenőleg.
 
 
-Releváns adatok (more info : [link](./data-plan/data-plan.md))
+Releváns adatok (more info : [data-plan.md](./data-plan/data-plan.md)) :
 
 Competitions (E.g. England - Premier League): <br>
-!!!!! Akár 1901/1902-es szezonig visszamenőleg
+
 
 | Táblázat/Statisztika | Jelenlegi Állapot | 
 |--------------|-----------|
