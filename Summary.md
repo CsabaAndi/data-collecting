@@ -96,6 +96,7 @@ Not important :
 ## preview for one of the data [wide table form of league statistic] 
 
 example : England - Premier League | Week 15 - Total
+Team name shortening (E.g. Tottenham H… ) is only in this preview.
 
 T - Total <br/>
 H - Home <br/>
