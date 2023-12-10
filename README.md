@@ -3,11 +3,13 @@
 
 ## Összefoglaló
 
+Jelmondat : A csigák csúsznak csak mint a szakdolgozat.
+
 A program lényege : [SOCCERWAY](https://us.soccerway.com) oldalon található adatok kigyüjtése. 
 Akár 1901/1902-es szezonig visszamenőleg.
 
 
-Releváns adatok (more info : [data-plan.md](./data-plan/data-plan.md)) :
+Leszedésre kerülő adatok (more info : [data-plan.md](./data-plan/data-plan.md)) :
 
 Competitions (E.g. England - Premier League): <br>
 
@@ -24,9 +26,9 @@ Team specific data (E.g. Arsenal):
 
 | Táblázat/Statisztika | Jelenlegi Állapot | 
 |--------------|-----------|
-| Match History | [80% done - not uploaded for the moment] |
-| newest season competition general statistic Table | [60% done - not uploaded for the moment] |
-| newest season competition scoring minutes charts | [60% done - not uploaded for the moment] |
+| Match History | [90% done - not uploaded for the moment] |
+| newest season competition general statistic Table | [75% done - not uploaded for the moment] |
+| newest season competition scoring minutes charts | [75% done - not uploaded for the moment] |
 
 
 Végső cél : Teljes autoamtizálás és napi szinten legfrissebb adatok gyüjtése (szakdolgozat szempontjából nem fontos)
@@ -80,14 +82,14 @@ page wont load some elements or waits for something forever --> rerun the progra
 
 Important : 
 
-   - automatize scraper to download fresh data daily
+   - automatize scraper to download fresh data daily (szakdolgozat szempontjából nem fontos)
    - scrape data for Thesis database [WIP]
 
 Not important : 
 
    - arguments for debug (argparse)
    - moving code parts to modules/packages
-   - clean code [SZakdolgozat szempontjából nem fontos]
+   - clean code [Szakdolgozat szempontjából nem fontos]
    
 
 
@@ -109,7 +111,7 @@ A - Against <br/>
 | GD: | Goal Difference |
 | p: | Points |
 
-<br/><br/>
+<br/>
 
 |   index | team            |   MP-T |   W-T |   D-T |   L-T |   GF-T |   GA-T |   MP-H |   W-H |   D-H |   L-H |   GF-H |   GA-H |   MP-A |   W-A |   D-A |   L-A |   GF-A |   GA-A |   GD |   P |
 |--------:|:----------------|-------:|------:|------:|------:|-------:|-------:|-------:|------:|------:|------:|-------:|-------:|-------:|------:|------:|------:|-------:|-------:|-----:|----:|
