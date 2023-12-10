@@ -1,13 +1,16 @@
-# 2020/2021 --> 2023/2024 
+## premier league 2023/2024 - game week 15
 
-## preview : premier league 2023-24 game week 15
-![wide](image-0.png)
-![topscorers](image-1.png)
-![over_under](image-2.png)
-![team_last_5](image-3.png)
-### csak a legfrissebb szezon 
-![team_stat_new_current_only](image-4.png)
+### Wide Table
+![wide](image-0.png) <br>
+### Topscorers
+![topscorers](image-1.png) <br>
+### Over/Under
+![over_under](image-2.png) <br>
+### Last 5 games score
+![team_last_5](image-3.png) <br>
+## Team Specific (E.g. Arsenal): 
 
-### akár az összes meccs xyz évig visszamenőleg
-
-![team_game_history](image-5.png)
+### Newest competition season statistic
+![team_stat_new_current_only](image-4.png) <br>
+### Match History
+![team_game_history](image-5.png) <br>
