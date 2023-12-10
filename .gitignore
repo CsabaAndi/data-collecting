@@ -1,7 +1,8 @@
 # chromium browser
 browser/chromium/tmp
 
-
+# cvs data files
+exported_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
