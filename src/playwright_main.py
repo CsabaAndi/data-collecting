@@ -69,8 +69,8 @@ def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
         
     html = page.content()
     
-    #dataframes.to_dataframe(html)
-    data_to_scrape_team.table_scrape_statistic(html)
+    dataframes.to_dataframe(html)
+    #data_to_scrape_team.table_scrape_statistic(html)
     
       
     # TODO tábla kattintás vissza gomb for team specific game scores

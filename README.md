@@ -3,6 +3,45 @@
 
 ## Összefoglaló
 
+A program lényege : [SOCCERWAY](https://us.soccerway.com) oldalon található adatok kigyüjtése.
+
+
+Releváns adatok (more info : [link](./data-plan/data-plan.md))
+
+Competitions (E.g. England - Premier League): <br>
+!!!!! Akár 1901/1902-es szezonig visszamenőleg
+
+| Táblázat/Statisztika | Jelenlegi Állapot | 
+|--------------|-----------|
+| League Table (Team name + Last-5-matches) |[implemented]|
+| Wide Table |[implemented]|
+| Topscorers (top 15 for now) Table | [implemented]|
+| Over/Under Table | [implemented]|
+
+
+Team specific data (E.g. Arsenal):
+
+| Táblázat/Statisztika | Jelenlegi Állapot | 
+|--------------|-----------|
+| Match History | [80% done - not uploaded for the moment] |
+| newest season competition general statistic Table | [60% done - not uploaded for the moment] |
+| newest season competition scoring minutes charts | [60% done - not uploaded for the moment] |
+
+
+Végső cél : Teljes autoamtizálás és napi szinten legfrissebb adatok gyüjtése (szakdolgozat szempontjából nem fontos)
+
+Jelenlegi Állapot : felsorolt adatok/táblázatok jelenleg félig-automatizálva leszedhetőek 
+
+Az adatleszedés jelenleg másodpercekben mérhető 
+
+## own modules/packages 
+(currently it's working but the whole file structure / import structure is a mess)
+
+constans_pkg: constans változók E.g Links / Folder paths <br>
+debug_pkg (logs):  logger for debugging + context manager for runtime measuring <br>
+resource_blocking_pgk : 
+   - browser page : image, fonts, ads, tracking, request, google, facebook -  blocks useless, resource/time consuming data
+
 
 ## Requirements : 
 
@@ -41,13 +80,13 @@ page wont load some elements or waits for something forever --> rerun the progra
 Important : 
 
    - automatize scraper to download fresh data daily
-   - scrape data for analyzing [WIP]
+   - scrape data for Thesis database [WIP]
 
 Not important : 
 
-   - arguments for debug
+   - arguments for debug (argparse)
    - moving code parts to modules/packages
-   - clean code
+   - clean code [SZakdolgozat szempontjából nem fontos]
    
 
 
