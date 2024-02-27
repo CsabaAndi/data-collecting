@@ -38,7 +38,7 @@ def popup_privacy_onetime(page: any):
 
 
 
-def main(debug_slow_down=0, type="wide"): # TODO külön class browser-nek / not important /
+def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek / not important /
   with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
         user_data_dir=constans.BROWSER_DATA_DIR,
@@ -55,7 +55,7 @@ def main(debug_slow_down=0, type="wide"): # TODO külön class browser-nek / not
 
     page.route("**/*", rb.intercept_route)
     #constans.LINKS_2023_2024[0]
-    page.goto("https://us.soccerway.com/teams/england/arsenal-fc/660/statistics/") # TODO automatize scraping for all links
+    page.goto("https://us.soccerway.com/national/england/premier-league/20232024/regular-season/r76443/") # TODO automatize scraping for all links
     #page.wait_for_timeout(1000)
    
 
@@ -63,7 +63,7 @@ def main(debug_slow_down=0, type="wide"): # TODO külön class browser-nek / not
     popup_privacy_onetime(page)
     
     # TODO 1st last five table | 2nd wide click és wide table | 3rd topscorers table !!!!!!!!
-    match type:
+    match table_type:
       case "last":
         pass
       case "wide":
@@ -81,8 +81,7 @@ def main(debug_slow_down=0, type="wide"): # TODO külön class browser-nek / not
     html = page.content()
     
     
-    
-    dataframes.to_dataframe(html)
+    dataframes.to_dataframe(html, table_type)
     #data_to_scrape_team.table_scrape_statistic(html)
     
       
@@ -107,4 +106,4 @@ def main(debug_slow_down=0, type="wide"): # TODO külön class browser-nek / not
    
 if __name__ == "__main__":
   with debuglog.timed():
-    main(debug_slow_down=10)
+    main(debug_slow_down=10, table_type='wide')
