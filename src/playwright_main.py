@@ -38,8 +38,8 @@ def popup_privacy_onetime(page: any):
 
 
 
-def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
- with sync_playwright() as p:
+def main(debug_slow_down=0, type="wide"): # TODO külön class browser-nek / not important /
+  with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
         user_data_dir=constans.BROWSER_DATA_DIR,
         headless=False,
@@ -61,13 +61,26 @@ def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
 
     time_wait(0.5, msg="after page open")
     popup_privacy_onetime(page)
-       
+    
     # TODO 1st last five table | 2nd wide click és wide table | 3rd topscorers table !!!!!!!!
-    #page.get_by_role("listitem").filter(has_text="Wide").click()
-    #page.get_by_role("listitem").filter(has_text="Over/under").click()
-    time_wait(0.5)
-        
+    match type:
+      case "last":
+        pass
+      case "wide":
+        page.get_by_role("listitem").filter(has_text="Wide").click()
+      case "ou":
+        page.get_by_role("listitem").filter(has_text="Over/under").click()
+      case "team-stat":
+        pass
+      case "team-history":
+        pass
+      case _:
+        pass #default --> last_5 and topscorer
+      
+    time_wait(0.5)             
     html = page.content()
+    
+    
     
     dataframes.to_dataframe(html)
     #data_to_scrape_team.table_scrape_statistic(html)
@@ -94,4 +107,4 @@ def main(debug_slow_down=0): # TODO külön class browser-nek / not important /
    
 if __name__ == "__main__":
   with debuglog.timed():
-    main(debug_slow_down=0)
+    main(debug_slow_down=10)
