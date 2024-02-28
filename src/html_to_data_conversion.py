@@ -3,9 +3,7 @@ import pandas as pd
 
 
 # TODO többi leszedett táblázatot is átalakitani majd csv or json !!!
-
-def to_dataframe(html, table_type='wide'):
-  
+def html_to_dataframe(html, table_type='wide'):
   wide=False
   match table_type:
     case "last":
@@ -32,7 +30,6 @@ def to_dataframe(html, table_type='wide'):
   else:
     df = df_table
     
-
   # Converts the dataframe into str object with formatting
   print(df.to_markdown())
   

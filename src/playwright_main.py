@@ -4,8 +4,7 @@ import time
 from debug_pkg.logs import log as debuglog
 from resource_blocking_pkg import block as rb
 import constans_pkg.constans as constans
-import dataframes
-import data_to_scrape_team
+import html_to_data_conversion
 
 
 # TODO mindent kiszervezni majd module/pkg  / not important /
@@ -75,7 +74,7 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
     time_wait(0.5)             
     html = page.content()
      
-    dataframes.to_dataframe(html, table_type)
+    html_to_data_conversion.html_to_dataframe(html, table_type)
 
     # TODO tábla kattintás vissza gomb for team specific game scores
     '''  
