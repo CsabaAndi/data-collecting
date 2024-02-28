@@ -5,12 +5,10 @@ from debug_pkg.logs import log as debuglog
 from resource_blocking_pkg import block as rb
 import constans_pkg.constans as constans
 import dataframes
-
 import data_to_scrape_team
 
 
 # TODO mindent kiszervezni majd module/pkg  / not important /
-
 def time_wait(wait_time_seconds: float, msg="no msg"):
   """Calls time.sleep(wait_time_seconds), then prints the debug log if logging is set to debug
   
@@ -37,7 +35,6 @@ def popup_privacy_onetime(page: any):
     logging.debug(f"privacy popup not visible or already saved in cookies, timeouterror")
 
 
-
 def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek / not important /
   with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
@@ -54,11 +51,9 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
     page = browser.new_page()
 
     page.route("**/*", rb.intercept_route)
-    #constans.LINKS_2023_2024[0]
-    page.goto("https://us.soccerway.com/national/england/premier-league/20232024/regular-season/r76443/") # TODO automatize scraping for all links
+    page.goto(constans.LINKS_2023_2024[0]) # TODO automatize scraping for all links
     #page.wait_for_timeout(1000)
    
-
     time_wait(0.5, msg="after page open")
     popup_privacy_onetime(page)
     
@@ -79,18 +74,14 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
       
     time_wait(0.5)             
     html = page.content()
-    
-    
+     
     dataframes.to_dataframe(html, table_type)
-    #data_to_scrape_team.table_scrape_statistic(html)
-    
-      
+
     # TODO tábla kattintás vissza gomb for team specific game scores
     '''  
     for _ in range(20):
       page.get_by_text("Previous").click()'''
     
-
     # ide jön : csapat választás
     # ide jön : tábla választás
     # ide jön : scrape
@@ -98,7 +89,6 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
     # automatizálás
     
     logging.debug(f"DONE")
-
 
     #time_wait(1000000000000000)
     browser.close()
