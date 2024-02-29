@@ -99,4 +99,5 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
    
 if __name__ == "__main__":
   with debuglog.timed():
-    main(debug_slow_down=10, table_type='top')
+    for x in ["last", "ou", "top", "wide"]:
+      main(debug_slow_down=10, table_type=x)

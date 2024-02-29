@@ -2,6 +2,8 @@ import data_to_scrape_tablepage, data_to_scrape_team
 import pandas as pd
 
 
+# TODO rename file 
+
 # TODO többi leszedett táblázatot is átalakitani majd csv or json !!!
 def html_to_dataframe(html, league_team="error", table_type="wide",date="3000"):
   wide=False
