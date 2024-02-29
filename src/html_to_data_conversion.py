@@ -3,27 +3,29 @@ import pandas as pd
 
 
 # TODO többi leszedett táblázatot is átalakitani majd csv or json !!!
-def html_to_dataframe(html, table_type='wide'):
+def html_to_dataframe(html, league_team="error", table_type="wide",date="3000"):
   wide=False
   match table_type:
-    case "last":
+    case "last": #TODO gut
       headers, rows = data_to_scrape_tablepage.table_scrape_last_games(html) 
-    case "wide":
+    case "wide": #TODO gut
       headers, rows = data_to_scrape_tablepage.table_scrape_wide(html) 
       wide=True
-    case "ou":
+    case "ou": #TODO gut
       headers, rows = data_to_scrape_tablepage.table_scrape_over_under(html) 
-    case "team-stat":
+    case "top": #TODO gut
+        headers, rows = data_to_scrape_tablepage.table_scrape_topscorers(html)
+    case "team-stat": #TODO 
       headers, rows = data_to_scrape_team.table_scrape_statistic(html)
-    case "team-history":
+    case "team-history": #TODO 
       #headers, rows = data_to_scrape_team.table_scrape_match_history_per_page(html)
       pass
     case _:
       pass #default --> last_5 and topscorer
 
-  # headers = []
+  #headers = []
   df_table = pd.DataFrame(rows, columns=headers)
-  df_table.to_csv(r'../exported_data/miez.csv', sep='\t', encoding='utf-8', index=False)
+  df_table.to_csv(f"../exported_data/{league_team}-{table_type}-{date}.csv", sep='\t', encoding='utf-8', index=False)
   
   if wide:
     df = df_table.set_index('index')
