@@ -35,6 +35,8 @@ def popup_privacy_onetime(page: any):
 
 
 def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek / not important /
+  index = range(0,len(constans.LINKS_2023_2024))[0]
+  league_team=index #TODO league or team name for output csv name
   with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
         user_data_dir=constans.BROWSER_DATA_DIR,
@@ -50,7 +52,7 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
     page = browser.new_page()
 
     page.route("**/*", rb.intercept_route)
-    page.goto(constans.LINKS_2023_2024[0]) # TODO automatize scraping for all links
+    page.goto(constans.LINKS_2023_2024[index]) # TODO automatize scraping for all links
     #page.wait_for_timeout(1000)
    
     time_wait(0.5, msg="after page open")
@@ -64,17 +66,19 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
         page.get_by_role("listitem").filter(has_text="Wide").click()
       case "ou":
         page.get_by_role("listitem").filter(has_text="Over/under").click()
-      case "team-stat":
+      case "top":
+        pass  
+      case "team-stat": # más link
         pass
-      case "team-history":
+      case "team-history": # más link
         pass
       case _:
         pass #default --> last_5 and topscorer
       
     time_wait(0.5)             
     html = page.content()
-     
-    html_to_data_conversion.html_to_dataframe(html, table_type)
+    
+    html_to_data_conversion.html_to_dataframe(html, league_team, table_type)
 
     # TODO tábla kattintás vissza gomb for team specific game scores
     '''  
@@ -95,4 +99,4 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
    
 if __name__ == "__main__":
   with debuglog.timed():
-    main(debug_slow_down=10, table_type='wide')
+    main(debug_slow_down=10, table_type='top')
