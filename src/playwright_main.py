@@ -35,8 +35,6 @@ def popup_privacy_onetime(page: any):
 
 
 def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek / not important /
-  index = range(0,len(constans.LINKS_2023_2024))[0]
-  league_team=index #TODO league or team name for output csv name
   with sync_playwright() as p:
     browser = p.chromium.launch_persistent_context(
         user_data_dir=constans.BROWSER_DATA_DIR,
@@ -51,34 +49,52 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
     )
     page = browser.new_page()
 
-    page.route("**/*", rb.intercept_route)
-    page.goto(constans.LINKS_2023_2024[index]) # TODO automatize scraping for all links
-    #page.wait_for_timeout(1000)
-   
-    time_wait(0.5, msg="after page open")
-    popup_privacy_onetime(page)
-    
-    # TODO 1st last five table | 2nd wide click és wide table | 3rd topscorers table !!!!!!!!
-    match table_type:
-      case "last":
-        pass
-      case "wide":
-        page.get_by_role("listitem").filter(has_text="Wide").click()
-      case "ou":
-        page.get_by_role("listitem").filter(has_text="Over/under").click()
-      case "top":
-        pass  
-      case "team-stat": # más link
-        pass
-      case "team-history": # más link
-        pass
-      case _:
-        pass #default --> last_5 and topscorer
+    for test_index in range(0,len(constans.LINKS_2023_2024)):
+        league_team=test_index #TODO league or team name for output csv name:   
+        
+        page.route("**/*", rb.intercept_route)
+        page.goto(constans.LINKS_2023_2024[test_index]) # TODO automatize scraping for all links
+        #page.wait_for_timeout(1000)
       
-    time_wait(0.5)             
-    html = page.content()
-    
-    html_to_data_conversion.html_to_dataframe(html, league_team, table_type)
+        time_wait(0.5, msg="after page open")
+        popup_privacy_onetime(page)
+        
+        time_wait(0.5)
+        
+        """
+        
+        # TODO 1st last five table | 2nd wide click és wide table | 3rd topscorers table !!!!!!!!
+        match table_type:
+          case "last":
+            pass
+          case "wide":
+            page.get_by_role("listitem").filter(has_text="Wide").click()
+            time_wait(0.5) 
+          case "ou":
+            time_wait(0.5) #TODO DEL OR FIX IT
+            page.get_by_role("listitem").filter(has_text="Over/under").click()
+            time_wait(0.5) #TODO DEL OR FIX IT
+          case "top":
+            pass  
+          case "team-stat": # más link
+            pass
+          case "team-history": # más link
+            pass
+          case _:
+            pass #default --> last_5 and topscorer
+        
+        """
+              
+        html_to_data_conversion.html_to_dataframe(html=page.content(), league_team=league_team, table_type="last")
+        html_to_data_conversion.html_to_dataframe(html=page.content(), league_team=league_team, table_type="top")
+        time_wait(1) 
+        page.get_by_role("listitem").filter(has_text="Wide").click()
+        time_wait(1) 
+        html_to_data_conversion.html_to_dataframe(html=page.content(), league_team=league_team, table_type="wide")
+        time_wait(1) 
+        page.get_by_role("listitem").filter(has_text="Over/under").click()
+        time_wait(1,5) 
+        html_to_data_conversion.html_to_dataframe(html=page.content(), league_team=league_team, table_type="ou")
 
     # TODO tábla kattintás vissza gomb for team specific game scores
     '''  
@@ -99,5 +115,4 @@ def main(debug_slow_down=0, table_type="wide"): # TODO külön class browser-nek
    
 if __name__ == "__main__":
   with debuglog.timed():
-    for x in ["last", "ou", "top", "wide"]:
-      main(debug_slow_down=10, table_type=x)
+    main(debug_slow_down=0)
