@@ -3,7 +3,7 @@ import logging
 import time
 from resource_blocking_pkg import block as rb
 import constans_pkg.constans as constans
-import html_to_data_conversion
+import data_to_csv
 
 
 # TODO mindent kiszervezni majd module/pkg  / not important /
@@ -66,16 +66,16 @@ def main(debug_slow_down=0, league_size_for_debug=1): # TODO külön class brows
         handle_privacy_popup(page)    
         time_wait(0.5)
 
-        html_to_data_conversion.html_to_dataframe(html=page.content(), league_team=league_team, table_type="last")
-        html_to_data_conversion.html_to_dataframe(html=page.content(), league_team=league_team, table_type="top")
+        data_to_csv.html_to_dataframe(html=page.content(), league_team=league_team, table_type="last")
+        data_to_csv.html_to_dataframe(html=page.content(), league_team=league_team, table_type="top")
         time_wait(2) 
         page.get_by_role("listitem").filter(has_text="Wide").click()
         time_wait(2) 
-        html_to_data_conversion.html_to_dataframe(html=page.content(), league_team=league_team, table_type="wide")
+        data_to_csv.html_to_dataframe(html=page.content(), league_team=league_team, table_type="wide")
         time_wait(2) 
         page.get_by_role("listitem").filter(has_text="Over/under").click()
         time_wait(2) 
-        html_to_data_conversion.html_to_dataframe(html=page.content(), league_team=league_team, table_type="ou")
+        data_to_csv.html_to_dataframe(html=page.content(), league_team=league_team, table_type="ou")
         
     logging.debug(f"DONE")
     #time_wait(1000000000000000)

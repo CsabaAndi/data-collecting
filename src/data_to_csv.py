@@ -1,4 +1,4 @@
-import data_to_scrape_tablepage, data_to_scrape_team
+import scrape_tables_data, scrape_teams_data
 import pandas as pd
 
 
@@ -8,15 +8,15 @@ import pandas as pd
 def html_to_dataframe(html, league_team="error", table_type="wide",date="3000"):
   match table_type:
     case "last": #TODO gut
-      headers, rows = data_to_scrape_tablepage.table_scrape_last_games(html) 
+      headers, rows = scrape_tables_data.table_scrape_last_games(html) 
     case "wide": #TODO gut 
-      headers, rows = data_to_scrape_tablepage.table_scrape_wide(html)
+      headers, rows = scrape_tables_data.table_scrape_wide(html)
     case "ou": #TODO gut
-      headers, rows = data_to_scrape_tablepage.table_scrape_over_under(html) 
+      headers, rows = scrape_tables_data.table_scrape_over_under(html) 
     case "top": #TODO gut
-        headers, rows = data_to_scrape_tablepage.table_scrape_topscorers(html)
+        headers, rows = scrape_tables_data.table_scrape_topscorers(html)
     case "team-stat": #TODO 
-      headers, rows = data_to_scrape_team.table_scrape_statistic(html)
+      headers, rows = scrape_teams_data.table_scrape_statistic(html)
     case "team-history": #TODO 
       #headers, rows = data_to_scrape_team.table_scrape_match_history_per_page(html)
       pass
