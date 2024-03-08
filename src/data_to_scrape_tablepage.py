@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import logging
 
 #TODO [All func] dokument + list helyett map or dict / not important /
+#TODO standardize data header names
 
 def table_scrape_last_games(html): 
     soup = BeautifulSoup(html, 'html.parser')
