@@ -52,7 +52,7 @@ def table_scrape_topscorers(html):
     table_data = []
     for tr in table_rows:
         td = tr.find_all('td')     
-        row = [col.text.strip() for col in td if col.text.stri()]
+        row = [col.text.strip() for col in td if col.text.strip()]
         table_data.append(row)  
     logging.debug(table_data)   
 
