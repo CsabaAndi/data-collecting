@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 import logging
 import time
+import urllib.parse
 from resource_blocking_pkg import block as rb
 import constans_pkg.constans as constans
 import data_to_csv
@@ -56,26 +57,27 @@ def main(debug_slow_down=0, league_size_for_debug=1): # TODO külön class brows
 
 
     for index in range(0,(len(constans.LINKS_2023_2024)-11+league_size_for_debug)):
-        league_team=index #TODO league or team name for output csv name:   
+        parsed_link_list = list(filter(None, (urllib.parse.urlparse(constans.LINKS_2023_2024[index]).path.split('/')))) # TODO dont use constans links, use page current url
         
         page.route("**/*", rb.intercept_route)
         page.goto(constans.LINKS_2023_2024[index])
+        
         #page.wait_for_timeout(1000)
       
         time_wait(0.5, msg="after page open")
         handle_privacy_popup(page)    
         time_wait(0.5)
 
-        data_to_csv.html_to_dataframe(html=page.content(), league_team=league_team, table_type="last")
-        data_to_csv.html_to_dataframe(html=page.content(), league_team=league_team, table_type="top")
+        data_to_csv.html_to_dataframe(html=page.content(), table_type="last", link_data=parsed_link_list)
+        data_to_csv.html_to_dataframe(html=page.content(), table_type="top", link_data=parsed_link_list)
         time_wait(2) 
         page.get_by_role("listitem").filter(has_text="Wide").click()
         time_wait(2) 
-        data_to_csv.html_to_dataframe(html=page.content(), league_team=league_team, table_type="wide")
+        data_to_csv.html_to_dataframe(html=page.content(), table_type="wide", link_data=parsed_link_list)
         time_wait(2) 
         page.get_by_role("listitem").filter(has_text="Over/under").click()
         time_wait(2) 
-        data_to_csv.html_to_dataframe(html=page.content(), league_team=league_team, table_type="ou")
+        data_to_csv.html_to_dataframe(html=page.content(), table_type="ou", link_data=parsed_link_list)
         
     logging.debug(f"DONE")
     #time_wait(1000000000000000)
