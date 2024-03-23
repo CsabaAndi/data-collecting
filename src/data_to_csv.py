@@ -5,7 +5,7 @@ import pandas as pd
 # TODO rename file 
 
 # TODO többi leszedett táblázatot is átalakitani majd csv or json !!!
-def html_to_dataframe(html, league_team="error", table_type="wide",date="3000"):
+def html_to_dataframe(html, league_team="error", table_type="wide",date="3000", link_data=[]):
   match table_type:
     case "last": #TODO gut
       headers, rows = scrape_tables_data.table_scrape_last_games(html) 
@@ -24,7 +24,7 @@ def html_to_dataframe(html, league_team="error", table_type="wide",date="3000"):
       pass # TODO | default --> last_5 and topscorer
 
   df_table = pd.DataFrame(rows, columns=headers)
-  df_table.to_csv(f"../exported_data/{league_team}-{table_type}-{date}.csv", encoding='utf-8', index=False)
+  df_table.to_csv(f"../exported_data/{link_data[1]}-{link_data[2]}-{link_data[3]}-{table_type}.csv", encoding='utf-8', index=False)
   
   df = df_table
     
