@@ -1,8 +1,29 @@
 from bs4 import BeautifulSoup
+from io import StringIO
+from pathlib import Path  
 import logging
+import pandas as pd
+from tabulate import tabulate
+
+
+# TODO works | newest | aaaa
+def team_match_history(html, test, test_team):
+    soup = BeautifulSoup(html, 'html.parser')
+    table = soup.select_one("table.matches")           
+    data = pd.read_html(StringIO(str(table)))[0]
+    tmp_df = pd.DataFrame(data)
+    tmp_df.columns=["Date", "Competition", "Home team", "Score", "Away team", "delete1", "delete2"]
+    tmp_df.drop(columns=['delete1', 'delete2'], inplace=True) # fölösleges oszlopok
+    tmp_df.dropna(inplace=True) # üres sorok
+    tmp_df["Score"] = tmp_df["Score"].apply(lambda x: x.replace(' ', ''))
+    
+    logging.debug(tabulate(tmp_df, headers = 'keys', tablefmt = 'psql'))
+
+    return tmp_df
 
 
 
+# TODO fix whole
 def table_scrape_statistic(html): # TODO  dokument + list helyett map or dict / not important /
 
     soup = BeautifulSoup(html, 'html.parser')
@@ -25,7 +46,8 @@ def table_scrape_statistic(html): # TODO  dokument + list helyett map or dict / 
     return headers_table_over_under, table_data
 
 
-def scrape_charts(html): # TODO egész
+# TODO fix whole
+def scrape_charts(html): 
 
     soup = BeautifulSoup(html, 'html.parser')
 
