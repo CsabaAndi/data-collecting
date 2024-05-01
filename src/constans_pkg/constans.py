@@ -1,3 +1,6 @@
+#Extra output for testing
+DEV_MODE = True
+
 #dir for the browser extensions
 PATH_TO_EXTENSIONS = "../browser/extensions/chrome_extensions"
 
